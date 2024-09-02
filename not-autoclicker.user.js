@@ -2,7 +2,7 @@
 // @name         Not Pixel Autoclicker
 // @namespace    Violentmonkey Scripts
 // @match        *://*notpx.app/*
-// @version      1.0
+// @version      1.1
 // @grant        none
 // @icon         https://notpx.app/favicon.ico
 // @downloadURL  https://github.com/mudachyo/Not-Pixel/raw/main/not-autoclicker.user.js
@@ -50,13 +50,13 @@ function simulateClick(element, x, y) {
   }
 
   function randomClick() {
-	const paintButton = document.querySelector('button._button_l12id_145');
+	const paintButton = document.querySelector('button._button_ihilj_146');
 
 	if (paintButton) {
-	  const buttonText = paintButton.querySelector('._button_text_l12id_169').textContent;
+	  const buttonText = paintButton.querySelector('._button_text_ihilj_170').textContent;
 
 	  if (buttonText === 'Paint') {
-		moveMap(); // Двигаем карту только если есть энергия
+		moveMap();
 		const canvas = document.getElementById('canvasHolder');
 		const x = Math.floor(Math.random() * canvas.width);
 		const y = Math.floor(Math.random() * canvas.height);
