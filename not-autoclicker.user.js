@@ -2,7 +2,7 @@
 // @name         Not Pixel Autoclicker
 // @namespace    Violentmonkey Scripts
 // @match        *://*notpx.app/*
-// @version      1.2
+// @version      1.3
 // @grant        none
 // @icon         https://notpx.app/favicon.ico
 // @downloadURL  https://github.com/mudachyo/Not-Pixel/raw/main/not-autoclicker.user.js
@@ -40,9 +40,9 @@ function openPaintWindow() {
 }
 
 function randomClick() {
-  const paintButton = document.querySelector('button._button_ihilj_146');
+  const paintButton = document.querySelector('#root > div > div._order_panel_b6kxf_1 > div > button');
   if (paintButton) {
-    const buttonText = paintButton.querySelector('._button_text_ihilj_170').textContent;
+    const buttonText = paintButton.querySelector('#root > div > div._order_panel_b6kxf_1 > div > button > span').textContent;
 
     if (buttonText === 'Paint') {
       waitForElement('#canvasHolder', (canvas) => {
