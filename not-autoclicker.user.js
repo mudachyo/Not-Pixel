@@ -2,7 +2,7 @@
 // @name         Not Pixel Autoclicker
 // @namespace    Violentmonkey Scripts
 // @match        *://*notpx.app/*
-// @version      1.4
+// @version      1.5
 // @grant        none
 // @icon         https://notpx.app/favicon.ico
 // @downloadURL  https://github.com/mudachyo/Not-Pixel/raw/main/not-autoclicker.user.js
@@ -73,6 +73,19 @@ function randomClick() {
     setTimeout(randomClick, 2000);
   }
 }
+
+function checkGameCrash() {
+  const crashElement = document.querySelector('div._container_ieygs_8');
+  if (crashElement) {
+    console.log('Игра вылетела. Обновление страницы.');
+    location.reload();
+  } else {
+    setTimeout(checkGameCrash, 2000);
+  }
+}
+
+checkGameCrash();
+
 
 function startScript() {
   openPaintWindow();
