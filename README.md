@@ -6,7 +6,7 @@
 ## Как запустить
 - Установить в свой браузер расширение [Violentmonkey](https://chromewebstore.google.com/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag?hl=be)
 - Для установки **автокликера** установите [этот скрипт](https://github.com/mudachyo/Not-Pixel/raw/main/not-autoclicker.user.js)
-- Открыть [Бота Not Pixel](https://web.telegram.org/k/#?tgaddr=tg%3A%2F%2Fresolve%3Fdomain%3Dnotpixel%26appname%3Dapp%26startapp%3Df2475526) и запустить игру
+- Открыть [Бота Not Pixel](https://web.telegram.org/k/#?tgaddr=tg%3A%2F%2Fresolve%3Fdomain%3Dnotpixel%26appname%3Dapp%26startapp%3Df7489121494) и запустить игру
 
 ---
 > [!TIP]

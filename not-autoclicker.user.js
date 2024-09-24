@@ -2,7 +2,7 @@
 // @name         Not Pixel Autoclicker
 // @namespace    Violentmonkey Scripts
 // @match        *://*notpx.app/*
-// @version      1.5
+// @version      1.6
 // @grant        none
 // @icon         https://notpx.app/favicon.ico
 // @downloadURL  https://github.com/mudachyo/Not-Pixel/raw/main/not-autoclicker.user.js
@@ -40,9 +40,9 @@ function openPaintWindow() {
 }
 
 function randomClick() {
-  const paintButton = document.querySelector('#root > div > div._order_panel_9t9ju_1 > div > button');
+  const paintButton = document.evaluate('//*[@id="root"]/div/div[5]/div/button', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
   if (paintButton) {
-    const buttonText = paintButton.querySelector('#root > div > div._order_panel_9t9ju_1 > div > button > span').textContent;
+    const buttonText = paintButton.querySelector('span[class^="_button_text_"]').textContent;
 
     if (buttonText === 'Paint') {
       waitForElement('#canvasHolder', (canvas) => {
@@ -61,8 +61,9 @@ function randomClick() {
         setTimeout(randomClick, nextClickDelay);
       });
     } else if (buttonText === 'No energy') {
-      console.log('Нет энергии. Пауза на 1 минуту.');
-      setTimeout(randomClick, 60000);
+      const randomPause = Math.floor(Math.random() * 120000) + 60000; // От 60000 мс (1 минута) до 180000 мс (3 минуты)
+      console.log(`Нет энергии. Рандомная пауза: ${randomPause} мс.`);
+      setTimeout(randomClick, randomPause);
     } else {
       const nextClickDelay = Math.floor(Math.random() * 1000) + 1000;
       setTimeout(randomClick, nextClickDelay);
