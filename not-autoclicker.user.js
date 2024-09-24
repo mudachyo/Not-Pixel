@@ -2,7 +2,7 @@
 // @name         Not Pixel Autoclicker
 // @namespace    Violentmonkey Scripts
 // @match        *://*notpx.app/*
-// @version      1.6
+// @version      1.7
 // @grant        none
 // @icon         https://notpx.app/favicon.ico
 // @downloadURL  https://github.com/mudachyo/Not-Pixel/raw/main/not-autoclicker.user.js
@@ -40,6 +40,12 @@ function openPaintWindow() {
 }
 
 function randomClick() {
+  if (isPaused()) {
+    console.log('Скрипт на паузе.');
+    setTimeout(randomClick, 1000);
+    return;
+  }
+
   const paintButton = document.evaluate('//*[@id="root"]/div/div[5]/div/button', document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
   if (paintButton) {
     const buttonText = paintButton.querySelector('span[class^="_button_text_"]').textContent;
@@ -76,6 +82,11 @@ function randomClick() {
 }
 
 function checkGameCrash() {
+  if (isPaused()) {
+    setTimeout(checkGameCrash, 2000);
+    return;
+  }
+
   const crashElement = document.querySelector('div._container_ieygs_8');
   if (crashElement) {
     console.log('Игра вылетела. Обновление страницы.');
@@ -85,12 +96,78 @@ function checkGameCrash() {
   }
 }
 
-checkGameCrash();
+function isPaused() {
+  const pauseUntil = localStorage.getItem('pauseUntil');
+  if (pauseUntil) {
+    const pauseUntilDate = new Date(pauseUntil);
+    return pauseUntilDate > new Date();
+  }
+  return false;
+}
 
+function createPauseButton() {
+  const button = document.createElement('button');
+  button.textContent = 'Pause';
+  button.style.position = 'fixed';
+  button.style.color = 'black';
+  button.style.top = '10px';
+  button.style.right = '10px';
+  button.style.zIndex = 1000;
+  button.style.backgroundColor = '#f0f0f0';
+  button.style.borderRadius = '5px';
+  button.addEventListener('click', () => {
+    const existingContainer = document.querySelector('.pause-container');
+    if (existingContainer) {
+      document.body.removeChild(existingContainer);
+    } else {
+      const pauseUntil = promptForDate();
+      if (pauseUntil) {
+        localStorage.setItem('pauseUntil', pauseUntil.toISOString());
+      }
+    }
+  });
+  document.body.appendChild(button);
+}
+
+function promptForDate() {
+  const container = document.createElement('div');
+  container.className = 'pause-container';
+  container.style.position = 'fixed';
+  container.style.top = '50%';
+  container.style.left = '50%';
+  container.style.transform = 'translate(-50%, -50%)';
+  container.style.backgroundColor = 'white';
+  container.style.padding = '20px';
+  container.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.5)';
+  container.style.zIndex = 1001;
+
+  const input = document.createElement('input');
+  input.type = 'datetime-local';
+  input.style.marginBottom = '10px';
+  container.appendChild(input);
+
+  const button = document.createElement('button');
+  button.textContent = 'OK';
+  button.style.color = 'black';
+  button.addEventListener('click', () => {
+    const date = new Date(input.value);
+    if (!isNaN(date)) {
+      localStorage.setItem('pauseUntil', date.toISOString());
+      document.body.removeChild(container);
+    } else {
+      alert('Неверная дата');
+    }
+  });
+  container.appendChild(button);
+
+  document.body.appendChild(container);
+}
 
 function startScript() {
+  createPauseButton();
   openPaintWindow();
   setTimeout(randomClick, 2000);
+  checkGameCrash();
 }
 
 startScript();
